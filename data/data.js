@@ -1,4 +1,4 @@
-export let data = {
+export const data = {
   id: crypto.randomUUID(),
   title: "Todolist",
   tasks: [
@@ -102,9 +102,7 @@ export function getDataLocalStorage() {
 
   if (savedData) {
     const parsedData = JSON.parse(savedData);
-    data = parsedData; // Перезаписываем значение data
-    // !пришлось у data поменять объявление с const на let  пока не решил!
-
+    Object.assign(data, parsedData); // Перезаписываем значение data
     notifySubscribe(); // Перерисовать UI с загруженными данными
   }
 }
