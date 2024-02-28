@@ -93,6 +93,8 @@ dialog {
   border-radius: 5px;
 }
 button {
+  color: black;
+  font-size: 16px;
   font-family: inherit;
   margin: 5px;
   padding: 5px 10px;
