@@ -1,5 +1,5 @@
 import { Todolist } from "./components/todolist/todolist.js";
-import { data, subscribe } from "./data/data.js";
+import { data, getDataLocalStorage, subscribe } from "./data/data.js";
 
 function refreshUI() {
   const rootElement = document.getElementById("root");
@@ -10,3 +10,4 @@ function refreshUI() {
 
 refreshUI();
 subscribe(refreshUI);
+getDataLocalStorage();

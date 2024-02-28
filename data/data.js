@@ -1,4 +1,4 @@
-export const data = {
+export let data = {
   id: crypto.randomUUID(),
   title: "Todolist",
   tasks: [
@@ -38,6 +38,7 @@ export function deleteElement(taskId) {
   let tasks = data.tasks;
   data.tasks = tasks.filter((t) => t.id !== taskId);
   notifySubscribe();
+  setDataLocalStorage(); //===========================================
 
   //функция которая собственно меняет данные и хранит в себе данные
   //а с помощью вызова notifySubscribe внутри , мы можем дальше прокинуть и алгоритм отрисовки и сами ДАННЫЕ
@@ -63,6 +64,7 @@ export function addElement(textInput) {
   }
 
   notifySubscribe();
+  setDataLocalStorage(); //===========================================
 }
 
 /* редактирование */
@@ -74,6 +76,7 @@ export function editTask(oldText, newText) {
   );
 
   notifySubscribe();
+  setDataLocalStorage(); //===========================================
 }
 
 /*  */
@@ -81,9 +84,27 @@ export function editTask(oldText, newText) {
 export function closeDialog() {
   data.dialogWindow = false;
   notifySubscribe();
+  setDataLocalStorage(); //===========================================
 }
 //закрытие диалогового окна по нажатию кнопки "закрыть"
 export function openDialog() {
   data.dialogWindow = true;
   notifySubscribe();
+}
+//функция для записи введенных задач в  localStorage
+function setDataLocalStorage() {
+  localStorage.setItem("tasksData", JSON.stringify(data));
+}
+
+//функция для извлечения введенных задач в localStorage и отображения в UI
+export function getDataLocalStorage() {
+  const savedData = localStorage.getItem("tasksData");
+
+  if (savedData) {
+    const parsedData = JSON.parse(savedData);
+    data = parsedData; // Перезаписываем значение data
+    // !пришлось у data поменять объявление с const на let  пока не решил!
+
+    notifySubscribe(); // Перерисовать UI с загруженными данными
+  }
 }
